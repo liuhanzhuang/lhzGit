@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    第一个数:<input id="firstNum" type="text" name="" id="">
+    <select id="ysf">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select> 第二个数:
+    <input id="secondNum" type="text" name="" id="">
+    <button id="js">计算</button>
+    <p id="result">结果:</p>
+</body>
+<script>
+    var button = document.getElementById("js");
+    button.addEventListener("click", function() {
+        var firstNum = document.getElementById("firstNum").value;
+        var secondNum = document.getElementById("secondNum").value;
+        var ysf = document.getElementById("ysf").value;
+        var res = document.getElementById("result");
+        var result = "error:";
+        var flag = true;
+
+        if (firstNum == "") {
+            result += "第一个数不能为空#";
+            flag = false;
+        } else {
+            if (isNaN(firstNum)) {
+                result += "第一个数为无效数据";
+                flag = false;
+            }
+        }
+        if (secondNum == "") {
+            result += "第二个数不能为空#";
+            flag = false;
+        } else {
+            if (isNaN(secondNum)) {
+                result += "第二个数为无效数据";
+                flag = false;
+            }
+        }
+
+        if (flag) {
+            switch (ysf) {
+                case "+":
+                    result = "运算结果:" + (parseFloat(firstNum) + parseFloat(secondNum));
+                    break;
+                case "-":
+                    result = "运算结果:" + (parseFloat(firstNum) - parseFloat(secondNum));
+                    break;
+                case "*":
+                    result = "运算结果:" + (parseFloat(firstNum) * parseFloat(secondNum));
+                    break;
+                case "/":
+                    if (secondNum == 0) {
+                        result = "除数不能为0";
+
+                    } else {
+                        result = "运算结果:" + (parseFloat(firstNum) / parseFloat(secondNum));
+                    }
+
+                    break;
+            }
+
+        }
+        res.innerHTML = result;
+    })
+</script>
+
+</html>

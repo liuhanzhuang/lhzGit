@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0.5;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        #cadlenlar {
+            position: relative;
+            width: 282px;
+            /* height: 300px; */
+            border: 1px solid #ccc;
+            margin: 100px auto;
+        }
+        
+        .head {
+            display: flex;
+        }
+        
+        .prev {
+            flex: 1;
+            background-color: pink;
+        }
+        
+        .next {
+            flex: 1;
+            background-color: green;
+        }
+        
+        .currentYear {
+            text-align: center;
+            flex: 6;
+        }
+        
+        h5 {
+            text-align: center;
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .day {
+            display: flex;
+            background-color: #ccc;
+        }
+        
+        .day>li {
+            flex: 1;
+        }
+        
+        .clearfix:after {
+            content: "";
+            /*加一段内容*/
+            display: block;
+            /*让生成的元素以块级元素显示，占满剩余空间*/
+            height: 0;
+            /*避免生成的内容破坏原有布局高度*/
+            clear: both;
+            /*清除浮动*/
+            /* visibility: hidden; */
+            /*让生成的内容不可见*/
+        }
+        
+        .days {
+            /* overflow: hidden; */
+            /* width: 300px; */
+        }
+        
+        .days>li {
+            float: left;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            border: 1px solid transparent;
+        }
+        
+        .currentDate {
+            color: aqua;
+        }
+        
+        .hover:hover {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cadlenlar">
+        <div class="head">
+            <div class="prev">prevMonth</div>
+            <div class="currentYear"></div>
+            <div class="next">nextMonth</div>
+        </div>
+        <h5 class="currentMonth"></h5>
+        <ul class="day">
+            <li>周日</li>
+            <li>周一</li>
+            <li>周二</li>
+            <li>周三</li>
+            <li>周四</li>
+            <li>周五</li>
+            <li>周六</li>
+        </ul>
+        <ul class="days clearfix">
+
+        </ul>
+    </div>
+</body>
+<script>
+    var date = new Date();
+    var prevMonth = document.getElementsByClassName("prev")[0];
+    var nextMonth = document.getElementsByClassName("next")[0];
+    var currentYear = document.getElementsByClassName("currentYear")[0];
+    var currentMonth = document.getElementsByClassName("currentMonth")[0];
+    var days = document.getElementsByClassName("days")[0];
+
+    loadCadlendar(); //自动加载日历函数
+
+    function loadCadlendar() {
+
+        var cYear = date.getFullYear();
+        var cMonth = date.getMonth();
+        var cDate = date.getDate();
+        var week = new Date(cYear, cMonth, 1).getDay();
+        var daysSum = new Date(cYear, cMonth + 1, -1).getDate() + 1;
+        var arr = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+        currentYear.innerHTML = cYear + "年";
+        // date.getMonth() 返回0~11之间的一个数
+        currentMonth.innerHTML = arr[cMonth];
+        var html = "";
+        console.log("week" + week);
+        for (var i = 0; i < week; i++) {
+            html += '<li></li>';
+        }
+        for (var i = 1; i <= daysSum; i++) {
+            if (i == cDate) {
+                html += '<li class="currentDate">' + i + '</li>';
+            } else {
+                html += '<li class="hover">' + i + '</li>';
+            }
+
+
+        }
+        days.innerHTML = html;
+    }
+    nextMonth.addEventListener("click", function() {
+        date.setMonth(date.getMonth() + 1);
+        // console.log(date.getMonth());
+        loadCadlendar();
+    })
+    prevMonth.addEventListener("click", function() {
+        date.setMonth(date.getMonth() - 1);
+        // console.log(date.getMonth());
+        loadCadlendar();
+    })
+</script>
+
+</html>
